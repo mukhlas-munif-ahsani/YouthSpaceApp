@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "590525124661",
+    "firebase_url": "https://youthspace-app.firebaseio.com",
+    "project_id": "youthspace-app",
+    "storage_bucket": "youthspace-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590525124661:android:75b97ff7146c292018617c",
+        "android_client_info": {
+          "package_name": "com.munifahsan.youthspaceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590525124661-49l1uq3s1rtlpftm59o7cd276g2cgclm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMwLCwlhRVzFIRsfjf2hiKjrJuI3D5OA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590525124661-49l1uq3s1rtlpftm59o7cd276g2cgclm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

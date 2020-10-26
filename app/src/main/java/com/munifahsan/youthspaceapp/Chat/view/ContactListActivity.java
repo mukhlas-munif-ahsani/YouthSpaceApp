@@ -1,0 +1,168 @@
+package com.munifahsan.youthspaceapp.Chat.view;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.munifahsan.youthspaceapp.Chat.adapter.ContactListAdapter;
+import com.munifahsan.youthspaceapp.Chat.model.ChatListModel;
+import com.munifahsan.youthspaceapp.Chat.model.ChatModel;
+import com.munifahsan.youthspaceapp.R;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ContactListActivity extends AppCompatActivity implements ContactListAdapter.onItemClickListener {
+
+    ProgressDialog progressdialog;
+
+    private ContactListAdapter mAdapter;
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private CollectionReference userRef = firebaseFirestore.collection("USERS");
+    private CollectionReference chatRoomRef = firebaseFirestore.collection("CHAT_ROOM");
+    private LinearLayoutManager mLayoutManager;
+    Query query;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+    @BindView(R.id.recyclerView_addContactList)
+    RecyclerView mRvContact;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_contact);
+
+        ButterKnife.bind(this);
+        query = userRef;
+
+        progressdialog = new ProgressDialog(this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.setCancelable(false);
+
+        showMessage(user.getUid());
+
+        FirestoreRecyclerOptions<ChatModel> options = new FirestoreRecyclerOptions.Builder<ChatModel>()
+                .setQuery(query, ChatModel.class)
+                .build();
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (!task.getResult().isEmpty()) {
+                    showMessage("muncul");
+//                    mRvBeasiswaList.setVisibility(View.VISIBLE);
+//                    mShimmer.setVisibility(View.INVISIBLE);
+                } else {
+                    // showMessage("Kosong");
+//                    mRvBeasiswaList.setVisibility(View.INVISIBLE);
+//                    mShimmer.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mAdapter = new ContactListAdapter(options);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRvContact.setLayoutManager(mLayoutManager);
+        mRvContact.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter.startListening();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdapter.stopListening();
+    }
+
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onItemClick(String id, int position) {
+        progressdialog.show();
+        getChatRoom(id);
+    }
+
+    public void getChatRoom(String id){
+
+        chatRoomRef.document(user.getUid() + id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                showMessage(id);
+                ChatListModel model = documentSnapshot.toObject(ChatListModel.class);
+                if (documentSnapshot.exists()){
+                    navigateToChatRoom(model.getId());
+                } else {
+                    createChatRoom(id);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    public void createChatRoom(String id){
+        Map<String, Object> map = new HashMap<>();
+        map.put("nFrom", user.getUid());
+        map.put("nTo", id);
+        map.put("nCreatedAt", new Timestamp(new Date()));
+        map.put("nUpdatedAt", new Timestamp(new Date()));
+        map.put("nSpeakers", Arrays.asList(user.getUid(), id));
+
+        chatRoomRef.document(user.getUid() + id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                navigateToChatRoom(user.getUid() + id);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        //chatRoomRef.document(user.getUid() + id).collection("CHAT").document().set()
+    }
+
+    public void navigateToChatRoom(String chatRoomId){
+        progressdialog.dismiss();
+        Intent intent = new Intent(this, ChatRoomActivity.class);
+        intent.putExtra("CHAT_ROOM_ID", chatRoomId);
+        startActivity(intent);
+    }
+}

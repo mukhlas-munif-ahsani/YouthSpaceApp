@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marginStartAndEndHomeItem">10dp</dimen>
+    <dimen name="cardCornerRadiusItemHome">30dp</dimen>
+    <dimen name="layoutHightItemHome">105dp</dimen>
+</resources>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.HomePageFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="190dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/colorPrimary"
+                app:cardCornerRadius="25dp" />
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/youth_space_logo_for_home" />
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider_promo_home"
+            android:layout_width="match_parent"
+            android:layout_height="199dp"
+            android:layout_marginTop="14dp"
+            app:sliderAnimationDuration="600"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorMarginBottom="0dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="1dp"
+            app:sliderIndicatorSelectedColor="#62C3D0"
+            app:sliderIndicatorUnselectedColor="#2b2b2b"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/beasiswaButton"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Beasiswa"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Event"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginEnd="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Survey"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Lowongan"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Lomba"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginEnd="14dp"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Promo"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Forum"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Petisi"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="invisible"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginEnd="14dp"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutHightItemHome"
+                    android:layout_marginStart="@dimen/marginStartAndEndHomeItem"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/marginStartAndEndHomeItem"
+                    android:alpha="0.3"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/cardCornerRadiusItemHome"
+                    app:cardElevation="0dp">
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="70dp"
+                    android:fontFamily="@font/cera_gr"
+                    android:gravity="center"
+                    android:text="Promo"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>
