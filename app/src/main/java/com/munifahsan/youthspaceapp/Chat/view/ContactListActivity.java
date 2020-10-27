@@ -35,6 +35,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ContactListActivity extends AppCompatActivity implements ContactListAdapter.onItemClickListener {
 
@@ -63,17 +64,17 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
         progressdialog.setMessage("Please Wait....");
         progressdialog.setCancelable(false);
 
-        showMessage(user.getUid());
+        //showMessage(user.getUid());
 
-        FirestoreRecyclerOptions<ChatModel> options = new FirestoreRecyclerOptions.Builder<ChatModel>()
-                .setQuery(query, ChatModel.class)
+        FirestoreRecyclerOptions<ChatListModel> options = new FirestoreRecyclerOptions.Builder<ChatListModel>()
+                .setQuery(query, ChatListModel.class)
                 .build();
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (!task.getResult().isEmpty()) {
-                    showMessage("muncul");
+                    //showMessage("muncul");
 //                    mRvBeasiswaList.setVisibility(View.VISIBLE);
 //                    mShimmer.setVisibility(View.INVISIBLE);
                 } else {
@@ -115,12 +116,17 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
         getChatRoom(id);
     }
 
+    @OnClick(R.id.floatingActionButton_back_addContack)
+    public void onBackArrowClick(){
+        finish();
+    }
+
     public void getChatRoom(String id){
 
         chatRoomRef.document(user.getUid() + id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                showMessage(id);
+                //showMessage(id);
                 ChatListModel model = documentSnapshot.toObject(ChatListModel.class);
                 if (documentSnapshot.exists()){
                     navigateToChatRoom(model.getId());
@@ -143,6 +149,8 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
         map.put("nCreatedAt", new Timestamp(new Date()));
         map.put("nUpdatedAt", new Timestamp(new Date()));
         map.put("nSpeakers", Arrays.asList(user.getUid(), id));
+        map.put("nFromNumPeak", 0);
+        map.put("nToNumPeak", 0);
 
         chatRoomRef.document(user.getUid() + id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

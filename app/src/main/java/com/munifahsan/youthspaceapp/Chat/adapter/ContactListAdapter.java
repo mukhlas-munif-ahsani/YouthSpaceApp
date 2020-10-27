@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.munifahsan.youthspaceapp.Chat.model.ChatListModel;
 import com.munifahsan.youthspaceapp.Chat.model.ChatModel;
 import com.munifahsan.youthspaceapp.R;
 
@@ -19,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ContactListAdapter extends FirestoreRecyclerAdapter<ChatModel, ContactListAdapter.Holder> {
+public class ContactListAdapter extends FirestoreRecyclerAdapter<ChatListModel, ContactListAdapter.Holder> {
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -32,12 +33,12 @@ public class ContactListAdapter extends FirestoreRecyclerAdapter<ChatModel, Cont
         this.onItemClickListener = onItemClickListener;
     }
 
-    public ContactListAdapter(@NonNull FirestoreRecyclerOptions<ChatModel> options) {
+    public ContactListAdapter(@NonNull FirestoreRecyclerOptions<ChatListModel> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull Holder holder, int position, @NonNull ChatModel model) {
+    protected void onBindViewHolder(@NonNull Holder holder, int position, @NonNull ChatListModel model) {
         holder.id = model.getId();
 
         Glide.with(holder.itemView)

@@ -92,7 +92,7 @@ public class BeasiswaListActivity extends AppCompatActivity implements BeasiswaL
 
     @Override
     public void onItemClick(String id, int position) {
-        showMessage(id);
+        //showMessage(id);
         Intent intent = new Intent(this, DetailBeasiswaActivity.class);
         intent.putExtra("BEASISWA_ID", id);
         startActivity(intent);

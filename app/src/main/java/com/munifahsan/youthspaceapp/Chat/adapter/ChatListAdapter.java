@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -76,6 +77,12 @@ public class ChatListAdapter extends FirestoreRecyclerAdapter<ChatListModel, Cha
 
                 }
             });
+
+            if (model.getnFromNumPeak() != 0) {
+                holder.mNotifNumPeakLay.setVisibility(View.VISIBLE);
+                holder.mNotifNumPeak.setText(String.valueOf(model.getnFromNumPeak()));
+            }
+
         }
 
         if (!model.getnTo().equals(holder.mCurrent_id)) {
@@ -100,10 +107,18 @@ public class ChatListAdapter extends FirestoreRecyclerAdapter<ChatListModel, Cha
                 }
             });
 
+            if (model.getnToNumPeak() != 0) {
+                holder.mNotifNumPeakLay.setVisibility(View.VISIBLE);
+                holder.mNotifNumPeak.setText(String.valueOf(model.getnToNumPeak()));
+            }
+
         }
 
+        holder.from = model.getnFrom();
+        holder.to = model.getnTo();
+
         Glide.with(holder.itemView)
-                .load(model.getnImage())
+                .load(model.getnImageUrl())
                 .fitCenter()
                 .into(holder.mPhoto);
         //holder.mNama.setText(model.getnNama());
@@ -133,8 +148,11 @@ public class ChatListAdapter extends FirestoreRecyclerAdapter<ChatListModel, Cha
         TextView mNotifNumPeak;
         @BindView(R.id.linearLayout_itemChatList)
         LinearLayout mLayout;
-
+        @BindView(R.id.cardView_notifNumPeak_chatList)
+        CardView mNotifNumPeakLay;
         String id;
+        String from;
+        String to;
 
         private FirebaseAuth mAuth;
         private String mCurrent_id;
@@ -154,11 +172,11 @@ public class ChatListAdapter extends FirestoreRecyclerAdapter<ChatListModel, Cha
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            onItemClickListener.onItemClick(id, position);
+            onItemClickListener.onItemClick(id, position, from, to);
         }
     }
 
     public interface onItemClickListener {
-        void onItemClick(String id, int position);
+        void onItemClick(String id, int position, String from, String to);
     }
 }

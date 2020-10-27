@@ -5,6 +5,8 @@ public interface ChatRoomPresInt {
 
     void getData(String chatRoomId);
 
+    void getMsgData(String chatRoomId);
+
     void onCreate();
 
     void onDestroy();

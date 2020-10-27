@@ -7,20 +7,22 @@ import java.util.Date;
 public class ChatListModel {
     @DocumentId
     String id;
-    String nImage;
+    String nImageUrl;
     String nNama;
     String nPeakMsg;
     String nTime;
     String nFrom;
     String nTo;
     Date nUpdatedAt;
+    int nFromNumPeak;
+    int nToNumPeak;
 
     public ChatListModel() {
     }
 
     public ChatListModel(String id, String nImage, String nNama, String nPeakMsg, String nTime, String nFrom, String nTo) {
         this.id = id;
-        this.nImage = nImage;
+        this.nImageUrl = nImage;
         this.nNama = nNama;
         this.nPeakMsg = nPeakMsg;
         this.nTime = nTime;
@@ -32,8 +34,8 @@ public class ChatListModel {
         return id;
     }
 
-    public String getnImage() {
-        return nImage;
+    public String getnImageUrl() {
+        return nImageUrl;
     }
 
     public String getnNama() {
@@ -58,5 +60,13 @@ public class ChatListModel {
 
     public Date getnUpdatedAt() {
         return nUpdatedAt;
+    }
+
+    public int getnFromNumPeak() {
+        return nFromNumPeak;
+    }
+
+    public int getnToNumPeak() {
+        return nToNumPeak;
     }
 }

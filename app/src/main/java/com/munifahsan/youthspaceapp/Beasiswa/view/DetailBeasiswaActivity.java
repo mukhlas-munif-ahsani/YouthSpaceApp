@@ -66,7 +66,7 @@ public class DetailBeasiswaActivity extends AppCompatActivity implements DetailB
 
         Intent intent = getIntent();
         String mBeasiswaId = intent.getStringExtra("BEASISWA_ID");
-        showMessage(mBeasiswaId);
+        //showMessage(mBeasiswaId);
         mDetailBeasiswaPres.getData(mBeasiswaId);
     }
 
@@ -152,7 +152,7 @@ public class DetailBeasiswaActivity extends AppCompatActivity implements DetailB
 
     @Override
     public void setFormLink(String formLink){
-        showMessage(formLink);
+        //showMessage(formLink);
         this.formLink = formLink;
     }
 

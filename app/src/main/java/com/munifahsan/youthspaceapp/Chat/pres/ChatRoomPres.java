@@ -10,6 +10,7 @@ import com.munifahsan.youthspaceapp.EventBus.GreenRobotEventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import static com.munifahsan.youthspaceapp.Chat.ChatEvent.onError;
+import static com.munifahsan.youthspaceapp.Chat.ChatEvent.onMessageSent;
 import static com.munifahsan.youthspaceapp.Chat.ChatEvent.onSuccess;
 
 public class ChatRoomPres implements ChatRoomPresInt {
@@ -32,6 +33,9 @@ public class ChatRoomPres implements ChatRoomPresInt {
             case onError:
                 onError();
                 break;
+            case onMessageSent:
+                onMessageSent(event.getNumPeak(), event.getFromOrTo());
+                break;
         }
     }
 
@@ -51,9 +55,19 @@ public class ChatRoomPres implements ChatRoomPresInt {
         }
     }
 
+    public void onMessageSent(int num, String fromOrTo){
+        mChatRoomViewInt.setNumPeak(num);
+        mChatRoomViewInt.setFromOrTo(fromOrTo);
+    }
+
     @Override
     public void getData(String chatRoomId){
         mChatRoomRepoInt.getData(chatRoomId);
+    }
+
+    @Override
+    public void getMsgData(String chatRoomId){
+        mChatRoomRepoInt.getMsgData(chatRoomId);
     }
 
     @Override

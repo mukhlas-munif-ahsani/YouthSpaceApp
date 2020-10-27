@@ -11,7 +11,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.munifahsan.youthspaceapp.Chat.ChatEvent;
 import com.munifahsan.youthspaceapp.Chat.model.ChatListModel;
-import com.munifahsan.youthspaceapp.Chat.model.ChatModel;
 import com.munifahsan.youthspaceapp.EventBus.EventBus;
 import com.munifahsan.youthspaceapp.EventBus.GreenRobotEventBus;
 
@@ -50,10 +49,32 @@ public class ChatRoomRepo implements ChatRoomRepoInt {
         userRef.document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                ChatModel model = documentSnapshot.toObject(ChatModel.class);
+                ChatListModel model = documentSnapshot.toObject(ChatListModel.class);
                 postEvent(ChatEvent.onSuccess, null,
                         model.getnImageUrl(),
                         model.getnNama());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getMsgData(String chatRoomId){
+        chatRoomRef.document(chatRoomId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ChatListModel model = documentSnapshot.toObject(ChatListModel.class);
+                if (!model.getnFrom().equals(user.getUid())){
+                    postEventMsgSent(ChatEvent.onMessageSent, model.getnToNumPeak(), "from");
+                }
+
+                if (!model.getnTo().equals(user.getUid())){
+                    postEventMsgSent(ChatEvent.onMessageSent, model.getnFromNumPeak(), "to");
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -73,6 +94,17 @@ public class ChatRoomRepo implements ChatRoomRepoInt {
 
         event.setImage(imageUrl);
         event.setNama(nama);
+
+        EventBus eventBus = GreenRobotEventBus.getInstance();
+        eventBus.post(event);
+    }
+
+    public void postEventMsgSent(int type, int numPeak, String fromOrTo){
+        ChatEvent event = new ChatEvent();
+        event.setEventType(type);
+
+        event.setNumPeak(numPeak);
+        event.setFromOrTo(fromOrTo);
 
         EventBus eventBus = GreenRobotEventBus.getInstance();
         eventBus.post(event);

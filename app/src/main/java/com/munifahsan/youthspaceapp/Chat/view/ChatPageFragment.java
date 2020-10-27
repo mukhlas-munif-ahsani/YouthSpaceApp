@@ -69,7 +69,7 @@ public class ChatPageFragment extends Fragment implements ChatListAdapter.onItem
 
         query = chatRef.whereArrayContains("nSpeakers", user.getUid());
 
-        showMessage(user.getUid());
+        //showMessage(user.getUid());
         FirestoreRecyclerOptions<ChatListModel> options = new FirestoreRecyclerOptions.Builder<ChatListModel>()
                 .setQuery(query, ChatListModel.class)
                 .build();
@@ -78,7 +78,7 @@ public class ChatPageFragment extends Fragment implements ChatListAdapter.onItem
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (!task.getResult().isEmpty()) {
-                    showMessage("muncul");
+                    //showMessage("muncul");
                     mRvChatList.setVisibility(View.VISIBLE);
                     mShimmer.setVisibility(View.INVISIBLE);
                 } else {
@@ -112,7 +112,14 @@ public class ChatPageFragment extends Fragment implements ChatListAdapter.onItem
     }
 
     @Override
-    public void onItemClick(String id, int position) {
+    public void onItemClick(String id, int position, String from, String to) {
+        if (!from.equals(user.getUid())){
+            chatRef.document(id).update("nFromNumPeak", 0);
+        }
+
+        if (!to.equals(user.getUid())){
+            chatRef.document(id).update("nToNumPeak", 0);
+        }
         Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
         intent.putExtra("CHAT_ROOM_ID", id);
         startActivity(intent);
@@ -125,6 +132,6 @@ public class ChatPageFragment extends Fragment implements ChatListAdapter.onItem
     }
 
     public void showMessage(String msg){
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

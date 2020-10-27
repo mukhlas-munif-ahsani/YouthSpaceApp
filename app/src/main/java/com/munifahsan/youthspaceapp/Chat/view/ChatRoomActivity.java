@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
@@ -25,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -67,6 +69,9 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatRoomViewI
     private ChatRoomAdapter mChatAdapter;
     private String mChatRoomId;
 
+    private int numPeak;
+    private String fromOrTo;
+
     boolean isChatExist;
 
     @Override
@@ -79,7 +84,7 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatRoomViewI
         mChatRoomPresInt.onCreate();
 
         Intent intent = getIntent();
-        showMessage(intent.getStringExtra("CHAT_ROOM_ID"));
+        //showMessage(intent.getStringExtra("CHAT_ROOM_ID"));
 
         mChatRoomId = intent.getStringExtra("CHAT_ROOM_ID");
 
@@ -106,6 +111,7 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatRoomViewI
         mMessage.requestFocus();
 
         mChatRoomPresInt.getData(mChatRoomId);
+        mChatRoomPresInt.getMsgData(mChatRoomId);
 
         /*
         check apakah sudah pernha chating
@@ -155,6 +161,16 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatRoomViewI
         }
     }
 
+    @Override
+    public void setNumPeak(int numPeak){
+        this.numPeak = numPeak;
+    }
+
+    @Override
+    public void setFromOrTo(String fromOrTo){
+        this.fromOrTo = fromOrTo;
+    }
+
     public void showProgress() {
         mSendingProgress.setVisibility(View.VISIBLE);
     }
@@ -168,6 +184,16 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatRoomViewI
     }
 
     public void sendMessage(ChatModel message, String msg) {
+        chatRef.document(mChatRoomId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+            }
+        });
+
+        /*
+        mengirim pesan
+         */
         chatRef.document(mChatRoomId).collection("CHAT").add(message)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -178,8 +204,29 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatRoomViewI
                         }
                     }
                 });
+
+        /*
+        update peak message dan tanggal message
+         */
+
+        int n = numPeak + 1;
+
+        if (fromOrTo.equals("from")){
+            chatRef.document(mChatRoomId).update("nToNumPeak", n);
+        }
+
+        if (fromOrTo.equals("to")){
+            chatRef.document(mChatRoomId).update("nFromNumPeak", n);
+        }
+
         chatRef.document(mChatRoomId).update("nPeakMsg", msg,
-                "nUpdatedAt", new Timestamp(new Date()));
+                "nUpdatedAt", new Timestamp(new Date())).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mChatRoomPresInt.getMsgData(mChatRoomId);
+            }
+        });
+
     }
 
     @Override
@@ -193,5 +240,10 @@ public class ChatRoomActivity extends AppCompatActivity implements ChatRoomViewI
     @Override
     public void setNamaChatRoom(String nama) {
         mNamaChatRoom.setText(nama);
+    }
+
+    @OnClick(R.id.floatingActionButton_back_chatRoom)
+    public void onBackArrowClick(){
+        finish();
     }
 }

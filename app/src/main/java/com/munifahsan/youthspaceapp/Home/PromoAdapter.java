@@ -50,6 +50,9 @@ public class PromoAdapter extends SliderViewAdapter<PromoAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(PromoAdapter.Holder viewHolder, int position) {
+        if (mData.get(position).getnTitle().equals("")){
+            viewHolder.textViewDescription.setVisibility(View.INVISIBLE);
+        }
         viewHolder.textViewDescription.setText(mData.get(position).getnTitle());
         Glide.with(viewHolder.itemView)
                 .load(mData.get(position).getnImage())

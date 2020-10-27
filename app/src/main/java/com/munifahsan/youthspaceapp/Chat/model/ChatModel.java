@@ -11,8 +11,6 @@ public class ChatModel {
     private String id;
     private String nSenderId;
     private String nMessage;
-    private String nNama;
-    private String nImageUrl;
 
     @ServerTimestamp
     private Date nSentTime;
@@ -55,13 +53,5 @@ public class ChatModel {
 
     public void setnSentTime(Date nSentTime) {
         this.nSentTime = nSentTime;
-    }
-
-    public String getnNama() {
-        return nNama;
-    }
-
-    public String getnImageUrl() {
-        return nImageUrl;
     }
 }
