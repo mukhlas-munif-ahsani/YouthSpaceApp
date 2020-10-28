@@ -1,9 +1,14 @@
 package com.munifahsan.youthspaceapp.SplashScreen;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -19,6 +24,12 @@ import com.munifahsan.youthspaceapp.R;
 public class SplashScreen extends AppCompatActivity {
 
     FirebaseUser mCurrentUser;
+
+    ConnectivityManager cm;
+    NetworkInfo activeNetwork;
+    boolean isConnected;
+    Handler handler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,10 @@ public class SplashScreen extends AppCompatActivity {
         Hide app toolbar
          */
         //getActionBar().hide();
+
+        cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     @Override
@@ -54,34 +69,103 @@ public class SplashScreen extends AppCompatActivity {
         /*
         Filter whether the user is logged in or not
          */
-        Handler handler = new Handler();
-        if (mCurrentUser != null) {
+        if (isConnected){
+            if (mCurrentUser != null) {
 //            showMessage("MAIN ACTIVITY");
 
             /*
             Set delay 2 sec
              */
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    navigateToMain();
-                }
-            }, 2000);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navigateToMain();
+                    }
+                }, 3000);
 
-        } else {
+            } else {
 //            showMessage("LOGIN ACTIVITY");
 
             /*
             Set delay 2 sec
              */
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    navigateToLogin();
-                }
-            }, 2000);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navigateToLogin();
+                    }
+                }, 2000);
+            }
+        } else {
+            showDialogInternetIssue();
         }
+    }
 
+    public void showDialogInternetIssue() {
+        cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        activeNetwork = cm.getActiveNetworkInfo();
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set title dialog
+        alertDialogBuilder.setTitle("Mohon Periksa Koneksi Internet anda !!");
+
+        // set pesan dari dialog
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Coba Lagi", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // jika tombol diklik, maka akan menutup activity ini
+
+                        isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                check();
+                            }
+                        }, 2000);
+                    }
+                });
+
+        // membuat alert dialog dari builder
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // menampilkan alert dialog
+        alertDialog.show();
+
+    }
+
+    public void check(){
+        if (isConnected){
+            if (mCurrentUser != null) {
+//            showMessage("MAIN ACTIVITY");
+
+            /*
+            Set delay 2 sec
+             */
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navigateToMain();
+                    }
+                }, 3000);
+
+            } else {
+//            showMessage("LOGIN ACTIVITY");
+
+            /*
+            Set delay 2 sec
+             */
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navigateToLogin();
+                    }
+                }, 2000);
+            }
+        } else {
+            showDialogInternetIssue();
+        }
     }
 
     private void navigateToMain() {

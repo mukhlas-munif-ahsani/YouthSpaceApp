@@ -24,8 +24,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:layout_marginStart="0dp"
-        android:fontFamily="@font/cera_gr"
+        android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:text="Pilih Kontak"
         android:textColor="@color/white"
@@ -56,13 +55,67 @@
         app:cardCornerRadius="29dp"
         app:cardElevation="0dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_addContactList"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="50dp"
-            android:visibility="visible" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextField"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="2dp"
+                    app:boxCornerRadiusBottomEnd="100dp"
+                    app:boxCornerRadiusBottomStart="100dp"
+                    app:boxCornerRadiusTopEnd="100dp"
+                    app:boxCornerRadiusTopStart="100dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInput_search_addContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Search"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/button_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:fabSize="auto"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_search"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_addContactList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="50dp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

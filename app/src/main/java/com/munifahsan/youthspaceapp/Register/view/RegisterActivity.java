@@ -33,6 +33,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.munifahsan.youthspaceapp.Login.view.LoginActivity;
 import com.munifahsan.youthspaceapp.MainActivity;
 import com.munifahsan.youthspaceapp.R;
 import com.munifahsan.youthspaceapp.Register.pres.RegisterPres;
@@ -212,6 +213,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterViewI
 
     @OnClick(R.id.textIView_sudah_memiliki_akun)
     public void sudahPunyaAkunOnClick(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 

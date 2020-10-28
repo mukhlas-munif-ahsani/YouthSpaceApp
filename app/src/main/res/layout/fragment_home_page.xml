@@ -12,12 +12,12 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:visibility="invisible"
             android:id="@+id/content_homePage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -33,6 +33,25 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="225dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="50dp"
+                        android:id="@+id/cardView_notif_homePage"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="100dp"
+                        app:cardElevation="0dp"
+                        android:backgroundTint="@color/transparent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_baseline_notifications" />
+                    </androidx.cardview.widget.CardView>
 
                     <ImageView
                         android:id="@+id/image_home1"
@@ -61,7 +80,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginStart="22dp"
+                                android:layout_marginStart="18dp"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -69,6 +88,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:alpha="0.5"
+                                    android:fontFamily="@font/poppins_bold"
                                     android:text="Maksimalkan pontensimu"
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="12sp"
@@ -78,15 +98,15 @@
                                     android:id="@+id/textView_cardText2_homePage"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_bold"
                                     android:text="Maksimalkan pontensimu"
                                     android:textColor="@color/colorPrimary"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
                             </LinearLayout>
 
                         </androidx.cardview.widget.CardView>
                     </RelativeLayout>
-
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -177,6 +197,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Beasiswa"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -217,6 +238,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Event"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -257,6 +279,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Promo"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -297,6 +320,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Volunteering"
                             android:textColor="@color/black" />
                     </LinearLayout>
@@ -336,6 +360,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Lomba"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -376,6 +401,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Marketplace"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -416,6 +442,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Survey"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -456,6 +483,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Forum"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -496,6 +524,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Crowdfunding"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -536,6 +565,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
                             android:text="Petisi"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
@@ -573,6 +603,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Hottest Event"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -582,6 +613,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.7"
+                    android:fontFamily="@font/poppins"
                     android:text="Jangan lewatkan event-event dari kami ya!!!!"
                     android:textColor="@color/black"
                     android:textSize="12sp"
@@ -609,6 +641,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Artikel Terkini"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -618,6 +651,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.7"
+                    android:fontFamily="@font/poppins"
                     android:text="Buat kamu yang ga pengen ketinggalan info ter-update"
                     android:textColor="@color/black"
                     android:textSize="12sp"
@@ -636,8 +670,16 @@
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_homePage"
             android:layout_width="match_parent"
-            android:visibility="visible"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_header_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -135,9 +135,16 @@ public class HomePageFragment extends Fragment {
         mImageSlider.setAutoCycle(true);
         mImageSlider.startAutoCycle();
 
+        mPromoAdapter.setOnItemClickListener(new PromoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String id, int position) {
+                showMessage("Halaman belum tersedia..");
+            }
+        });
+
         showHottestEvent();
         showArtikelTerkini();
-        loadHomeContent();
+        loadHomeContent(view);
         return view;
     }
 
@@ -167,6 +174,13 @@ public class HomePageFragment extends Fragment {
         mRvHottestEvent.setLayoutManager(mLayoutManager);
         mRvHottestEvent.setAdapter(mHottestEventAdapter);
 
+        mHottestEventAdapter.setOnItemClickListener(new HottestEventAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String id, int position) {
+                showMessage("Halaman belum tersedia..");
+            }
+        });
+
     }
 
     private void showArtikelTerkini() {
@@ -191,9 +205,21 @@ public class HomePageFragment extends Fragment {
 
         mArtikelTerkiniAdapter = new ArtikelTerkiniAdapter(options);
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         mRvArtikelTerkini.setLayoutManager(mLayoutManager);
         mRvArtikelTerkini.setAdapter(mArtikelTerkiniAdapter);
+
+        mArtikelTerkiniAdapter.setOnItemClickListener(new ArtikelTerkiniAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String id, int position) {
+                showMessage("Halaman belum tersedia..");
+            }
+        });
     }
 
     @Override
@@ -210,7 +236,7 @@ public class HomePageFragment extends Fragment {
         mArtikelTerkiniAdapter.stopListening();
     }
 
-    public void loadHomeContent(){
+    public void loadHomeContent(View view){
         mPageContentRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -218,7 +244,7 @@ public class HomePageFragment extends Fragment {
                 mGreatingText.setText(model.getnGreating());
                 mCardText1.setText(model.getnHeaderCardText1());
                 mCardText2.setText(model.getnHeaderCardText2());
-                Glide.with(getActivity())
+                Glide.with(view)
                         .load(model.getnWelcomeImageUrl())
                         .fitCenter()
                         .into(mImageWelcome);
@@ -236,6 +262,11 @@ public class HomePageFragment extends Fragment {
                 mNama.setText(model.getnNama().substring(0, index));
             }
         });
+    }
+
+    @OnClick(R.id.cardView_notif_homePage)
+    public void onNotifClick(){
+        showMessage("Halaman belum tersedia..");
     }
 
     @OnClick(R.id.linearLayout_iconBeasiswa_home)

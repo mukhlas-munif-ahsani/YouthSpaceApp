@@ -220,7 +220,7 @@ public class RegisterRepo implements RegisterRepoInt {
                             String user_id = mAuth.getCurrentUser().getUid();
 
                             Map<String, Object> userMap = new HashMap<>();
-                            userMap.put("nNama", sNama);
+                            userMap.put("nNama", sNama + " ");
                             userMap.put("nEmail", sMail);
                             userMap.put("nNoTlp", "");
                             userMap.put("nToken_id", token_id);

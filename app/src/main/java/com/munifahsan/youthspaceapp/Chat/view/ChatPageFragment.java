@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -40,6 +42,8 @@ public class ChatPageFragment extends Fragment implements ChatListAdapter.onItem
     FloatingActionButton mAddButton;
     @BindView(R.id.shimmer_fragmentChatPage)
     ShimmerFrameLayout mShimmer;
+    @BindView(R.id.relativ_noObrolan)
+    RelativeLayout mNoObrolan;
 
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference chatRef = firebaseFirestore.collection("CHAT_ROOM");
@@ -82,6 +86,8 @@ public class ChatPageFragment extends Fragment implements ChatListAdapter.onItem
                     mRvChatList.setVisibility(View.VISIBLE);
                     mShimmer.setVisibility(View.INVISIBLE);
                 } else {
+                    mShimmer.setVisibility(View.INVISIBLE);
+                    mNoObrolan.setVisibility(View.VISIBLE);
                    // showMessage("Kosong");
 //                    mRvBeasiswaList.setVisibility(View.INVISIBLE);
 //                    mShimmer.setVisibility(View.VISIBLE);

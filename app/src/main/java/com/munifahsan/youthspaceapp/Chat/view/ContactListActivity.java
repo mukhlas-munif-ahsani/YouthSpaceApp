@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -15,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,6 +55,10 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
 
     @BindView(R.id.recyclerView_addContactList)
     RecyclerView mRvContact;
+    @BindView(R.id.textInput_search_addContact)
+    TextInputEditText mSearch;
+    @BindView(R.id.outlinedTextField)
+    TextInputLayout mSearchLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +100,59 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
 
         mAdapter.setOnItemClickListener(this);
 
+//        mSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                //search(mSearch.getText().toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                search(mSearch.getText().toString());
+//            }
+//        });
+
+    }
+
+    public void search(String text) {
+        if (!text.isEmpty()) {
+            query = userRef.orderBy("nNama").startAt(text).endAt(text + "\uf0ff");
+
+            FirestoreRecyclerOptions<ChatListModel> options = new FirestoreRecyclerOptions.Builder<ChatListModel>()
+                    .setQuery(query, ChatListModel.class)
+                    .build();
+
+            mAdapter = new ContactListAdapter(options);
+            mLayoutManager = new LinearLayoutManager(this);
+            mRvContact.setLayoutManager(mLayoutManager);
+            mRvContact.setAdapter(mAdapter);
+            mAdapter.startListening();
+        }
+
+        if (text.trim().isEmpty()) {
+            query = userRef;
+
+            FirestoreRecyclerOptions<ChatListModel> options = new FirestoreRecyclerOptions.Builder<ChatListModel>()
+                    .setQuery(query, ChatListModel.class)
+                    .build();
+
+            mAdapter = new ContactListAdapter(options);
+            mLayoutManager = new LinearLayoutManager(this);
+            mRvContact.setLayoutManager(mLayoutManager);
+            mRvContact.setAdapter(mAdapter);
+            mAdapter.startListening();
+        }
+
+    }
+
+    @OnClick(R.id.button_search)
+    public void onSearchClick() {
+        search(mSearch.getText().toString());
     }
 
     @Override
@@ -117,21 +178,31 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
     }
 
     @OnClick(R.id.floatingActionButton_back_addContack)
-    public void onBackArrowClick(){
+    public void onBackArrowClick() {
         finish();
     }
 
-    public void getChatRoom(String id){
+    public void getChatRoom(String id) {
 
         chatRoomRef.document(user.getUid() + id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 //showMessage(id);
                 ChatListModel model = documentSnapshot.toObject(ChatListModel.class);
-                if (documentSnapshot.exists()){
+                if (documentSnapshot.exists()) {
                     navigateToChatRoom(model.getId());
                 } else {
-                    createChatRoom(id);
+                    chatRoomRef.document(id + user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            ChatListModel model = documentSnapshot.toObject(ChatListModel.class);
+                            if (documentSnapshot.exists()) {
+                                navigateToChatRoom(model.getId());
+                            } else {
+                                createChatRoom(id);
+                            }
+                        }
+                    });
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -142,32 +213,40 @@ public class ContactListActivity extends AppCompatActivity implements ContactLis
         });
     }
 
-    public void createChatRoom(String id){
-        Map<String, Object> map = new HashMap<>();
-        map.put("nFrom", user.getUid());
-        map.put("nTo", id);
-        map.put("nCreatedAt", new Timestamp(new Date()));
-        map.put("nUpdatedAt", new Timestamp(new Date()));
-        map.put("nSpeakers", Arrays.asList(user.getUid(), id));
-        map.put("nFromNumPeak", 0);
-        map.put("nToNumPeak", 0);
+    public void createChatRoom(String id) {
+        if (id.equals(user.getUid())) {
+            showMessage("Anda Tidak bisa melakukan obrolan dengan diri sendiri");
+            progressdialog.dismiss();
+        }
 
-        chatRoomRef.document(user.getUid() + id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                navigateToChatRoom(user.getUid() + id);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        if (!id.equals(user.getUid())) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("nFrom", user.getUid());
+            map.put("nTo", id);
+            map.put("nCreatedAt", new Timestamp(new Date()));
+            map.put("nUpdatedAt", new Timestamp(new Date()));
+            map.put("nSpeakers", Arrays.asList(user.getUid(), id));
+            map.put("nFromNumPeak", 0);
+            map.put("nToNumPeak", 0);
 
-            }
-        });
+            chatRoomRef.document(user.getUid() + id).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    navigateToChatRoom(user.getUid() + id);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+        }
 
         //chatRoomRef.document(user.getUid() + id).collection("CHAT").document().set()
     }
 
-    public void navigateToChatRoom(String chatRoomId){
+    public void navigateToChatRoom(String chatRoomId) {
         progressdialog.dismiss();
         Intent intent = new Intent(this, ChatRoomActivity.class);
         intent.putExtra("CHAT_ROOM_ID", chatRoomId);
